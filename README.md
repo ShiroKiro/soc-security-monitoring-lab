@@ -107,8 +107,6 @@ Full mapping:
 
 ## Detection Scenarios
 
-## Detection Scenarios
-
 | Case | Scenario | Data Source | Detection Focus |
 |---|---|---|---|
 | 1 | Failed SSH login attempts | Linux auth logs, Wazuh | Brute-force / suspicious authentication |
