@@ -84,7 +84,7 @@ All events were generated intentionally and only inside the isolated lab environ
 |---|---:|---|
 | Wazuh Server | `192.168.62.10` | SIEM server |
 | Ubuntu monitored host | `192.168.62.20` | Linux endpoint, Wazuh Agent, Suricata |
-| Kali Linux / Test VM | `192.168.62.30` | Controlled test traffic |
+| Kali Linux / Test VM | DHCP-assigned, for example `192.168.62.129` | Controlled test traffic |
 | Windows endpoint | `192.168.62.40` | Windows logs, Sysmon, Wazuh Agent |
 
 ---
@@ -110,13 +110,13 @@ All events were generated intentionally and only inside the isolated lab environ
 
 | Case | Scenario | Main Data Source | Detection Focus |
 |---|---|---|---|
-| Case 1 | Failed SSH login attempts | Linux authentication logs, Wazuh | Suspicious authentication / brute-force behavior |
-| Case 2 | File Integrity Monitoring | Wazuh FIM | File modification monitoring |
+| Case 1 | SSH brute-force / failed login attempts | Linux authentication logs, Wazuh | Suspicious authentication / brute-force behavior |
+| Case 2 | File Integrity Monitoring | Wazuh FIM, Ubuntu endpoint | Unauthorized file modification detection |
 | Case 3 | Suricata network event | Suricata `eve.json`, Wazuh | Network IDS event review |
-| Case 4 | Windows failed login attempts | Windows Security logs | Event ID 4625 |
-| Case 5 | New local user created | Windows Security logs | Event ID 4720 |
-| Case 6 | User added to local Administrators group | Windows Security logs | Event ID 4732 |
-| Case 7 | Suspicious PowerShell activity | PowerShell logs, Sysmon, Wazuh | Process and command-line visibility |
+| Case 4 | Windows failed login attempts | Windows Security logs, Wazuh | Event ID 4625 / authentication failure investigation |
+| Case 5 | New local user created | Windows Security logs, Wazuh | Event ID 4720 / account creation monitoring |
+| Case 6 | User added to Administrators group | Windows Security logs, Wazuh | Event ID 4732 / privileged group change |
+| Case 7 | Suspicious PowerShell activity | Windows Security logs, Sysmon, Wazuh | Event ID 4688 / process creation investigation |
 
 Investigation files are stored in:
 
@@ -361,12 +361,28 @@ Possible future improvements:
 
 - Add custom Wazuh detection rules.
 - Expand Sysmon-based detection scenarios.
-- Add Windows process creation analysis with Event ID 4688 and Sysmon Event ID 1.
+- Expand Windows process creation analysis with additional Sysmon Event ID 1 examples.
 - Add additional threat hunting queries.
 - Add more Suricata detection scenarios.
 - Add more Power BI pages for Windows and Suricata events.
 - Improve timestamp parsing by adding full year and normalized datetime fields.
 - Add automated export from Wazuh alerts to the analysis pipeline.
+
+---
+
+## Repository Structure
+
+```text
+.
+├── investigations/              # SOC-style investigation reports
+├── docs/                         # MITRE ATT&CK mapping and supporting documentation
+├── python-log-analyzer/          # Python parser, SQLite database and SQL queries
+│   ├── output/                   # Generated CSV and SQLite outputs
+│   └── queries/                  # SQL investigation queries
+├── powerbi-dashboard/            # Power BI dashboard file
+├── screenshots/                  # Lab screenshots and evidence
+└── README.md
+```
 
 ---
 
@@ -386,3 +402,14 @@ Completed parts:
 - Python log analyzer
 - SQLite and SQL analysis
 - Power BI security dashboard
+
+---
+
+## How to Use This Project
+
+1. Review the lab architecture and tools used.
+2. Open the `investigations/` folder to read SOC-style case reports.
+3. Review the Python log analyzer in `python-log-analyzer/`.
+4. Check generated CSV and SQLite outputs in `python-log-analyzer/output/`.
+5. Open the Power BI dashboard to review authentication event visualizations.
+6. Use screenshots as supporting evidence for the completed lab scenarios.
