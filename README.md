@@ -24,6 +24,7 @@ The project was built as a portfolio project for **Junior SOC Analyst / Cyber Se
 - File Integrity Monitoring
 - SOC-style alert triage and investigation documentation
 - MITRE ATT&CK mapping for selected detection scenarios
+- Wazuh Active Response configuration (automated containment)
 
 ---
 
@@ -103,6 +104,7 @@ All events were generated intentionally and only inside the isolated lab environ
 - SQL
 - Power BI
 - MITRE ATT&CK
+- iptables
 
 ---
 
@@ -117,6 +119,7 @@ All events were generated intentionally and only inside the isolated lab environ
 | Case 5 | New local user created | Windows Security logs, Wazuh | Event ID 4720 / account creation monitoring |
 | Case 6 | User added to Administrators group | Windows Security logs, Wazuh | Event ID 4732 / privileged group change |
 | Case 7 | Suspicious PowerShell activity | Windows Security logs, Sysmon, Wazuh | Event ID 4688 / process creation investigation |
+| Case 8 | SSH brute-force with automated containment | Wazuh Active Response, iptables | Automated IP blocking (T1110 Brute Force) |
 
 Investigation files are stored in:
 
@@ -297,6 +300,7 @@ Main screenshot groups:
 | `17`–`24` | Windows investigation cases |
 | `25`–`28` | Python analyzer, SQLite and Power BI dataset preparation |
 | `29`–`30` | Power BI security dashboard |
+| `31`–`36` | Active Response config, brute-force alert, active-response log, iptables block |
 
 ---
 
@@ -319,6 +323,7 @@ This project demonstrates the ability to:
 - store parsed events in SQLite;
 - run SQL-based security analysis;
 - build a Power BI dashboard for security event reporting.
+- configure automated containment (Active Response) for high-confidence detections;
 
 ---
 
@@ -342,6 +347,7 @@ The lab successfully demonstrated:
 - CSV and SQLite output generation;
 - SQL-based authentication event analysis;
 - Power BI security dashboard creation.
+- automated SSH brute-force containment via Wazuh Active Response, verified end-to-end (alert → response log → firewall rule);
 
 ---
 
@@ -397,7 +403,7 @@ Completed parts:
 - Suricata IDS integration
 - Windows endpoint monitoring
 - Sysmon monitoring
-- seven documented investigation cases
+- eight documented investigation cases
 - MITRE ATT&CK mapping
 - Python log analyzer
 - SQLite and SQL analysis
